@@ -1,4 +1,4 @@
-##My template for expressjs library using typescript
+## My template for expressjs library using typescript
 
 ## How to use?
 
