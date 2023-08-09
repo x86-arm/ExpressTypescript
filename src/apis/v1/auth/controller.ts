@@ -8,16 +8,16 @@ export const login = async (
   res: Response,
   next: NextFunction
 ): Promise<any> => {
-  const result = await service.login(req, next);
+  const result = await service.login(req, res, next);
   if (result) new ApiResponse(result, "OK", 200, req.startTime).send(res);
 };
 
-export const register = async (
+export const signup = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<any> => {
-  const result = await service.register(req, next);
+  const result = await service.signup(req, next);
   if (result) new ApiResponse(result, "OK", 200, req.startTime).send(res);
 };
 

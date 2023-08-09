@@ -13,10 +13,11 @@ const connection = (): Redis => {
 
   redisInstance.on("error", (error: any) => {
     logger.error(`Redis error: ${error}`);
+    process.exit()
   });
 
   redisInstance.on("connect", () => {
-    logger.info("Redis connected");
+    logger.info(`Redis connected in port ${configs.redisHost}`);
   });
 
   return redisInstance;

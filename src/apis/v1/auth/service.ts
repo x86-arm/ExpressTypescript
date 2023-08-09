@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { NextFunction, Request } from "express";
+import { NextFunction, Request, Response } from "express";
 
 import { HttpException, StatusCode } from "exceptions";
 import { loginValidate, usersValidate } from "helpers/validation";
@@ -10,8 +10,9 @@ import {
   verifyRefreshToken,
 } from "helpers/jwt";
 import { RefreshTokenPayload } from "types/auth";
+import configs from "configs";
 
-export const register = async (req: Request, next: NextFunction) => {
+export const signup = async (req: Request, next: NextFunction) => {
   const { error } = usersValidate(req.body);
   const { username } = req.body;
 
@@ -50,7 +51,7 @@ export const register = async (req: Request, next: NextFunction) => {
   }
 };
 
-export const login = async (req: Request, next: NextFunction) => {
+export const login = async (req: Request, res: Response, next: NextFunction) => {
   const { username, password } = req.body;
 
   try {
@@ -128,6 +129,10 @@ export const login = async (req: Request, next: NextFunction) => {
 
     const accessToken = await signAccessToken(user._id, user.role);
     const refreshToken = await signRefreshToken(user._id, user.role);
+
+
+    res.cookie("accessToken", accessToken, { maxAge: Number(configs.jwt.accessTokenExpireIn), httpOnly: true })
+    res.cookie("refreshToken", accessToken, { maxAge: Number(configs.jwt.refreshTokenExpireIn), httpOnly: true })
 
     return {
       tokens: {

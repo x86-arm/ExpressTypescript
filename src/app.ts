@@ -11,6 +11,8 @@ import { errorMiddleware } from "middlewares/errorMiddleware";
 import { logger } from "utils/logger";
 import morganMiddleware from "utils/morgan";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser"
+import { apiRateLimiter } from "middlewares/apiRateLimiterMiddleware";
 
 const app = express();
 
@@ -20,6 +22,7 @@ const corsOption = {
 };
 
 app.use(cors(corsOption));
+app.use(cookieParser())
 app.use(bodyParser.json({ limit: "40mb" }));
 app.use(bodyParser.urlencoded({ limit: "40mb", extended: true }));
 app.use(expressFileupload({ useTempFiles: false }));
@@ -29,6 +32,7 @@ app.use(
     limit: "100mb",
   })
 );
+
 app.set("trust proxy", true);
 
 function initializeSecurity() {
@@ -58,8 +62,14 @@ function initializeErrorHandler() {
   app.use(errorMiddleware);
 }
 
+function initializeApiLimiter() {
+  app.use(apiRateLimiter)
+}
+
+
 initializeSecurity();
 initializeMiddlewares();
+initializeApiLimiter()
 app.use(routers);
 initializeErrorHandler();
 

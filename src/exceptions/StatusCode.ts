@@ -75,6 +75,10 @@ export const StatusCode = {
     status: 418,
     name: "ImATeapot",
   },
+  TooManyRequests: {
+    status: 429,
+    name: "TooManyRequests",
+  },
   InternalServerError: {
     status: 500,
     name: "InternalServerError",

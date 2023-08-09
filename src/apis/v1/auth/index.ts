@@ -1,12 +1,12 @@
 import { Router } from "express";
 
 import { asyncRouteHandler } from "middlewares/asyncRouteHandler";
-import { login, refreshToken, register } from "./controller";
+import { login, refreshToken, signup } from "./controller";
 
 const router = Router();
 
 router.post("/login", asyncRouteHandler(login));
-router.post("/register", asyncRouteHandler(register));
+router.post("/signup", asyncRouteHandler(signup));
 router.post("/refresh-token", asyncRouteHandler(refreshToken));
 
 export default router;
