@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
 
-import { HttpException, StatusCode } from "exceptions";
-import { loginValidate, usersValidate } from "helpers/validation";
-import UserModel from "models/schemas/User";
+import { HttpException, StatusCode } from 'exceptions';
+import { loginValidate, usersValidate } from 'helpers/validation';
+import UserModel from 'models/schemas/User';
 import {
   signAccessToken,
   signRefreshToken,
   verifyRefreshToken,
-} from "helpers/jwt";
-import { RefreshTokenPayload } from "types/auth";
-import configs from "configs";
+} from 'helpers/jwt';
+import { RefreshTokenPayload } from 'types/auth';
+import configs from 'configs';
 
 export const signup = async (req: Request, next: NextFunction) => {
   const { error } = usersValidate(req.body);
@@ -19,7 +19,7 @@ export const signup = async (req: Request, next: NextFunction) => {
   try {
     if (error)
       throw new HttpException(
-        "ValidateError",
+        'ValidateError',
         StatusCode.BadRequest.status,
         error.details[0].message,
         StatusCode.BadRequest.name
@@ -31,9 +31,9 @@ export const signup = async (req: Request, next: NextFunction) => {
 
     if (isExits) {
       throw new HttpException(
-        "CreateError",
+        'CreateError',
         StatusCode.BadRequest.status,
-        "Username is aready",
+        'Username is aready',
         StatusCode.BadRequest.name
       );
     }
@@ -51,7 +51,11 @@ export const signup = async (req: Request, next: NextFunction) => {
   }
 };
 
-export const login = async (req: Request, res: Response, next: NextFunction) => {
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { username, password } = req.body;
 
   try {
@@ -59,7 +63,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
     if (error) {
       throw new HttpException(
-        "ValidateError",
+        'ValidateError',
         StatusCode.BadRequest.status,
         error.details[0].message.toString(),
         StatusCode.BadRequest.name
@@ -69,9 +73,9 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     if (!username || !password) {
       return next(
         new HttpException(
-          "MissingError",
+          'MissingError',
           StatusCode.BadRequest.status,
-          "Missing username or password",
+          'Missing username or password',
           StatusCode.BadRequest.name
         )
       );
@@ -81,9 +85,9 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
     if (lockedUser?.is_deleted === true) {
       throw new HttpException(
-        "LockedError",
+        'LockedError',
         StatusCode.NotFound.status,
-        "Your account has been locked",
+        'Your account has been locked',
         StatusCode.NotFound.name
       );
     }
@@ -102,17 +106,17 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
           accessToken,
           refreshToken,
         },
-        message: "Your account has been disabled",
-        statusCode: "DISABLED",
+        message: 'Your account has been disabled',
+        statusCode: 'DISABLED',
       };
     }
 
     const user = await UserModel.findOne({ username });
     if (!user) {
       throw new HttpException(
-        "NotFoundError",
+        'NotFoundError',
         StatusCode.NotFound.status,
-        "User not registered!",
+        'User not registered!',
         StatusCode.NotFound.name
       );
     }
@@ -120,9 +124,9 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     const isValid = await user.schema.methods.isCheckPassword(password, user);
     if (!isValid) {
       throw new HttpException(
-        "NotFoundError",
+        'NotFoundError',
         StatusCode.Unauthorized.status,
-        "Incorrect password",
+        'Incorrect password',
         StatusCode.Unauthorized.name
       );
     }
@@ -130,9 +134,14 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     const accessToken = await signAccessToken(user._id, user.role);
     const refreshToken = await signRefreshToken(user._id, user.role);
 
-
-    res.cookie("accessToken", accessToken, { maxAge: Number(configs.jwt.accessTokenExpireIn), httpOnly: true })
-    res.cookie("refreshToken", accessToken, { maxAge: Number(configs.jwt.refreshTokenExpireIn), httpOnly: true })
+    res.cookie('accessToken', accessToken, {
+      maxAge: Number(configs.jwt.accessTokenExpireIn),
+      httpOnly: false,
+    });
+    res.cookie('refreshToken', refreshToken, {
+      maxAge: Number(configs.jwt.refreshTokenExpireIn),
+      httpOnly: false,
+    });
 
     return {
       tokens: {
@@ -150,9 +159,9 @@ export const refreshToken = async (req: Request, next: NextFunction) => {
   try {
     if (!refreshToken) {
       throw new HttpException(
-        "NotFoundError",
+        'NotFoundError',
         StatusCode.NotFound.status,
-        "Missing refreshToken",
+        'Missing refreshToken',
         StatusCode.NotFound.name
       );
     }

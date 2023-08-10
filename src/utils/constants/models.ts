@@ -1,11 +1,11 @@
 export const MODELS = {
-  user: "user",
+  user: 'user',
 };
 
 export const COLLECTION_NAME = {
-  user: "user",
+  user: 'user',
 };
 
 export const DOCUMENT_NAME = {
-  user: "User",
+  user: 'User',
 };

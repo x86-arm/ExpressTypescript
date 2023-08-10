@@ -1,7 +1,7 @@
-import IORedis, { Redis } from "ioredis";
+import IORedis, { Redis } from 'ioredis';
 
-import configs from "configs";
-import { logger } from "utils/logger";
+import configs from 'configs';
+import { logger } from 'utils/logger';
 
 const connection = (): Redis => {
   if (!configs.redisHost) {
@@ -11,12 +11,12 @@ const connection = (): Redis => {
     connectTimeout: 10000,
   });
 
-  redisInstance.on("error", (error: any) => {
+  redisInstance.on('error', (error: any) => {
     logger.error(`Redis error: ${error}`);
-    process.exit()
+    process.exit();
   });
 
-  redisInstance.on("connect", () => {
+  redisInstance.on('connect', () => {
     logger.info(`Redis connected in port ${configs.redisHost}`);
   });
 
@@ -27,17 +27,17 @@ const redis = connection();
 
 const set = async (key: string, value: any, ttl: number | string) => {
   logger.info(`set cache with key: ${key}`);
-  return redis.set(key, value, "EX", ttl);
+  return redis.set(key, value, 'EX', ttl);
 };
 
 const setNX = async (key: string, value: any, ttl: number | string) => {
   logger.info(`setNX cache with key: ${key}`);
-  return redis.set(key, value, "EX", ttl, "NX");
+  return redis.set(key, value, 'EX', ttl, 'NX');
 };
 
 const setXX = async (key: string, value: any, ttl: number | string) => {
   logger.info(`setXX cache with key: ${key}`);
-  return redis.set(key, value, "EX", ttl, "XX");
+  return redis.set(key, value, 'EX', ttl, 'XX');
 };
 
 const get = async (key: string) => {

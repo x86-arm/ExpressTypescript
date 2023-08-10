@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
 
-import { ApiResponse } from "utils/apiResponse";
-import * as service from "./service";
+import { ApiResponse } from 'utils/apiResponse';
+import * as service from './service';
 
 export const login = async (
   req: Request,
@@ -9,7 +9,7 @@ export const login = async (
   next: NextFunction
 ): Promise<any> => {
   const result = await service.login(req, res, next);
-  if (result) new ApiResponse(result, "OK", 200, req.startTime).send(res);
+  if (result) new ApiResponse(result, 'OK', 200, req.startTime).send(res);
 };
 
 export const signup = async (
@@ -18,7 +18,7 @@ export const signup = async (
   next: NextFunction
 ): Promise<any> => {
   const result = await service.signup(req, next);
-  if (result) new ApiResponse(result, "OK", 200, req.startTime).send(res);
+  if (result) new ApiResponse(result, 'OK', 200, req.startTime).send(res);
 };
 
 export const refreshToken = async (
@@ -27,5 +27,5 @@ export const refreshToken = async (
   next: NextFunction
 ): Promise<any> => {
   const result = await service.refreshToken(req, next);
-  if (result) new ApiResponse(result, "OK", 200, req.startTime).send(res);
+  if (result) new ApiResponse(result, 'OK', 200, req.startTime).send(res);
 };

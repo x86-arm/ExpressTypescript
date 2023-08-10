@@ -1,106 +1,106 @@
 export const StatusCode = {
   BadRequest: {
     status: 400,
-    name: "BadRequest",
+    name: 'BadRequest',
   },
   Unauthorized: {
     status: 401,
-    name: "Unauthorized",
+    name: 'Unauthorized',
   },
   PaymentRequired: {
     status: 402,
-    name: "PaymentRequired",
+    name: 'PaymentRequired',
   },
   Forbidden: {
     status: 403,
-    name: "Forbidden",
+    name: 'Forbidden',
   },
   NotFound: {
     status: 404,
-    name: "NotFound",
+    name: 'NotFound',
   },
   MethodNotAllowed: {
     status: 405,
-    name: "MethodNotAllowed",
+    name: 'MethodNotAllowed',
   },
   NotAcceptable: {
     status: 406,
-    name: "NotAcceptable",
+    name: 'NotAcceptable',
   },
   ProxyAuthenticationRequired: {
     status: 407,
-    name: "ProxyAuthenticationRequired",
+    name: 'ProxyAuthenticationRequired',
   },
   RequestTimeout: {
     status: 408,
-    name: "RequestTimeout",
+    name: 'RequestTimeout',
   },
   Conflict: {
     status: 409,
-    name: "Conflict",
+    name: 'Conflict',
   },
   Gone: {
     status: 410,
-    name: "Gone",
+    name: 'Gone',
   },
   LengthRequired: {
     status: 411,
-    name: "LengthRequired",
+    name: 'LengthRequired',
   },
   PreconditionFailed: {
     status: 412,
-    name: "PreconditionFailed",
+    name: 'PreconditionFailed',
   },
   PayloadTooLarge: {
     status: 413,
-    name: "PayloadTooLarge",
+    name: 'PayloadTooLarge',
   },
   URITooLong: {
     status: 414,
-    name: "URITooLong",
+    name: 'URITooLong',
   },
   UnsupportedMediaType: {
     status: 415,
-    name: "UnsupportedMediaType",
+    name: 'UnsupportedMediaType',
   },
   RangeNotSatisfiable: {
     status: 416,
-    name: "RangeNotSatisfiable",
+    name: 'RangeNotSatisfiable',
   },
   ExpectationFailed: {
     status: 417,
-    name: "ExpectationFailed",
+    name: 'ExpectationFailed',
   },
   ImATeapot: {
     status: 418,
-    name: "ImATeapot",
+    name: 'ImATeapot',
   },
   TooManyRequests: {
     status: 429,
-    name: "TooManyRequests",
+    name: 'TooManyRequests',
   },
   InternalServerError: {
     status: 500,
-    name: "InternalServerError",
+    name: 'InternalServerError',
   },
   NotImplemented: {
     status: 501,
-    name: "NotImplemented",
+    name: 'NotImplemented',
   },
   BadGateway: {
     status: 502,
-    name: "BadGateway",
+    name: 'BadGateway',
   },
   ServiceUnavailable: {
     status: 503,
-    name: "ServiceUnavailable",
+    name: 'ServiceUnavailable',
   },
   GatewayTimeout: {
     status: 504,
-    name: "GatewayTimeout",
+    name: 'GatewayTimeout',
   },
   NetworkAuthenticationRequired: {
     status: 511,
-    name: "NetworkAuthenticationRequired",
+    name: 'NetworkAuthenticationRequired',
   },
 };

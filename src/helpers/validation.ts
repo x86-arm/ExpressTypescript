@@ -1,5 +1,5 @@
-import Joi from "joi";
-import { Request } from "express";
+import Joi from 'joi';
+import { Request } from 'express';
 
 export const usersValidate = (body: Request) => {
   const schema = Joi.object({

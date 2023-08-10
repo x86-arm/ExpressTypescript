@@ -7,12 +7,14 @@
     "dev": "cross-env NODE_ENV=development nodemon --exec ts-node -r tsconfig-paths/register ./src/server.ts",
     "production": "cross-env NODE_ENV=production nodemon --exec ts-node -r tsconfig-paths/register ./src/server.ts",
     "build": "tsc && npx tsc-alias",
-    "start": "cross-env NODE_PATH=./dist node './dist/server.js' --watch './dist'"
+    "start": "cross-env NODE_PATH=./dist node './dist/server.js' --watch './dist'",
+    "formart": "prettier ./src --write"
   },
   "keywords": [],
   "author": "XuanBachDotDev",
   "license": "ISC",
   "dependencies": {
+    "@types/md5": "^2.3.2",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
@@ -25,6 +27,7 @@
     "ioredis": "^5.3.2",
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.1",
+    "md5": "^2.3.0",
     "mongoose": "^7.4.2",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1",
@@ -48,6 +51,7 @@
     "@types/request-ip": "^0.0.38",
     "express-fileupload": "^1.4.0",
     "nocache": "^4.0.0",
+    "prettier": "^3.0.1",
     "request-ip": "^3.3.0"
   }
 }

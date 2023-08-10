@@ -1,39 +1,40 @@
-import express, { Response, NextFunction } from "express";
-import cors from "cors";
-import helmet from "helmet";
-import noCache from "nocache";
-import expressFileupload from "express-fileupload";
-import requestIp from "request-ip";
-import routers from "apis";
-import initializeResources from "resources";
-import configs from "configs";
-import { errorMiddleware } from "middlewares/errorMiddleware";
-import { logger } from "utils/logger";
-import morganMiddleware from "utils/morgan";
-import bodyParser from "body-parser";
-import cookieParser from "cookie-parser"
-import { apiRateLimiter } from "middlewares/apiRateLimiterMiddleware";
+import express, { Response, NextFunction } from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import noCache from 'nocache';
+import expressFileupload from 'express-fileupload';
+import requestIp from 'request-ip';
+import routers from 'apis';
+import initializeResources from 'resources';
+import configs from 'configs';
+import { errorMiddleware } from 'middlewares/errorMiddleware';
+import { logger } from 'utils/logger';
+import morganMiddleware from 'utils/morgan';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import { apiRateLimiter } from 'middlewares/apiRateLimiterMiddleware';
+import { signVerifyMiddleware } from 'middlewares/signVerify';
 
 const app = express();
 
 const corsOption = {
   credentials: true,
-  origin: ["https://yourdomain.com", "http://localhost:3000"],
+  origin: ['https://yourdomain.com', 'http://localhost:3000', "http://127.0.0.1:5500"],
 };
 
 app.use(cors(corsOption));
-app.use(cookieParser())
-app.use(bodyParser.json({ limit: "40mb" }));
-app.use(bodyParser.urlencoded({ limit: "40mb", extended: true }));
+app.use(cookieParser());
+app.use(bodyParser.json({ limit: '40mb' }));
+app.use(bodyParser.urlencoded({ limit: '40mb', extended: true }));
 app.use(expressFileupload({ useTempFiles: false }));
 app.use(
   express.urlencoded({
     extended: true,
-    limit: "100mb",
+    limit: '100mb',
   })
 );
 
-app.set("trust proxy", true);
+app.set('trust proxy', true);
 
 function initializeSecurity() {
   app.use(noCache());
@@ -63,13 +64,19 @@ function initializeErrorHandler() {
 }
 
 function initializeApiLimiter() {
-  app.use(apiRateLimiter)
+  app.use(apiRateLimiter);
+}
+
+function initializeSignVerify() {
+  app.use(signVerifyMiddleware);
 }
 
 
+//initialize middleware
 initializeSecurity();
 initializeMiddlewares();
-initializeApiLimiter()
+initializeApiLimiter();
+initializeSignVerify();
 app.use(routers);
 initializeErrorHandler();
 

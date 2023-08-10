@@ -1,31 +1,31 @@
-import { model, Model, Schema } from "mongoose";
-import bcypt from "bcrypt";
+import { model, Model, Schema } from 'mongoose';
+import bcypt from 'bcrypt';
 
-import { MODELS } from "utils/constants/models";
-import User from "../types/User";
+import { MODELS } from 'utils/constants/models';
+import User from '../types/User';
 
 const UserSchema = new Schema<User>(
   {
     fullname: { type: String, required: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    avatar: { type: String, default: "" },
+    avatar: { type: String, default: '' },
     is_enabled: { type: Boolean, default: true },
     is_deleted: { type: Boolean, default: false },
     social_network: [{ name: String, url: String }],
-    role: { type: String, default: "user" },
+    role: { type: String, default: 'user' },
   },
   {
-    timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
   }
 );
 
-UserSchema.index({ fullname: "text", username: "text" });
+UserSchema.index({ fullname: 'text', username: 'text' });
 
 UserSchema.pre(
-  "save",
+  'save',
   async function (this: User, next: (err?: Error | undefined) => void) {
-    if (!this.isModified("password")) {
+    if (!this.isModified('password')) {
       return next();
     }
 
@@ -37,7 +37,7 @@ UserSchema.pre(
 );
 
 UserSchema.method(
-  "isCheckPassword",
+  'isCheckPassword',
   async function (password: string, user: User) {
     try {
       return await bcypt.compare(password, user.password);

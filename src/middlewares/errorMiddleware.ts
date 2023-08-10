@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
 
-import HttpException from "exceptions/HttpException";
+import HttpException from 'exceptions/HttpException';
 
 const errorMiddleware = (
   error: HttpException,
@@ -8,7 +8,7 @@ const errorMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  const errorCode = error?.errorCode || "ERROR_CODE_NOT_FOUND";
+  const errorCode = error?.errorCode || 'ERROR_CODE_NOT_FOUND';
   const time = Date.now() - req.startTime;
   const status = error?.status || 500;
 

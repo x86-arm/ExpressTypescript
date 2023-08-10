@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-import dotenvSafe from "dotenv-safe"; // dotenv-safe can allow empty env values
+import dotenv from 'dotenv';
+import dotenvSafe from 'dotenv-safe'; // dotenv-safe can allow empty env values
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}.local` });
 
@@ -10,10 +10,11 @@ dotenvSafe.config({
 export default {
   env: process.env.NODE_ENV,
   port: process.env.PORT,
+  requestBodySignSecret: process.env.REQUEST_BODY_SIGN_SECRET,
   rateLimit: {
     limitPerSeconds: process.env.LIMIT_PER_SECONDS || 3,
     limitRequestsPerSeconds: process.env.LIMIT_REQUESTS_PER_SECONDS || 20,
-    blockTime: process.env.BLOCK_TIME || 60
+    blockTime: process.env.BLOCK_TIME || 60,
   },
   mongodb: {
     protocol: process.env.MONGODB_PROTOCOL,
@@ -25,10 +26,10 @@ export default {
     uri: process.env.MONGODB_URI,
   },
   jwt: {
-    accessTokenSecret: process.env.ACCESS_TOKEN_SECRET || "",
-    refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET || "",
+    accessTokenSecret: process.env.ACCESS_TOKEN_SECRET || '',
+    refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET || '',
     accessTokenExpireIn: process.env.EXPIRESIN_ACCESS_TOKEN || 600000,
     refreshTokenExpireIn: process.env.EXPIRESIN_REFRESH_TOKEN || 864000000,
   },
-  redisHost: process.env.REDIS_HOST || "6379",
+  redisHost: process.env.REDIS_HOST || '6379',
 };
